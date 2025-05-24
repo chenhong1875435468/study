@@ -1,0 +1,7 @@
+Each group member should write an individual reflection. In the reflection, describe
+your own contributions to the group work, such as overall architecture analysis, component decomposition, quality attribute mapping, tactic extraction, or
+framework comparison.
+• Also, share your insights and learnings from this assignment, including 1) how your
+understanding of the Bass tactic and AI Agent framework architecture has
+improved. 2) how do you think the two AI Agent frameworks can be improved in
+terms of key quality attributes.

@@ -1,0 +1,299 @@
+# ==================== ID 1 ====================
+public class Configuration {
+  public final int PLACE_CACHING_DURATION_MINS = 1;
+  public final int PICTURE_CACHING_DURATION_MINS = 1;
+}
+
+# ==================== ID 2 ====================
+public class UserDao {
+
+  public String getDesc() {
+    return UserDao.class.getCanonicalName();
+  }
+}
+
+# ==================== ID 3 ====================
+class Test {
+  public double simple_method(double jj, double ii) {
+    jj = ii / jj;
+    jj = jj / ii;
+    return -1.0;
+  }
+}
+
+# ==================== ID 4 ====================
+public class SimpleClass {
+  public String doTheThing() {
+    return "SimpleClass implementation";
+  }
+}
+
+# ==================== ID 5 ====================
+public class JwtAuthenticationResponse implements Serializable {
+
+  private static final long serialVersionUID = 1250166508152483573L;
+
+  private final String token;
+
+  public JwtAuthenticationResponse(String token) {
+    this.token = token;
+  }
+
+  public String getToken() {
+    return this.token;
+  }
+}
+
+# ==================== ID 6 ====================
+public class TimestampedModel {
+  private LocalDateTime createdAt;
+  private LocalDateTime modifiedAt;
+
+  public TimestampedModel(LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    this.createdAt = createdAt;
+    this.modifiedAt = modifiedAt;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public LocalDateTime getModifiedAt() {
+    return modifiedAt;
+  }
+
+  public void setModifiedAt(LocalDateTime modifiedAt) {
+    this.modifiedAt = modifiedAt;
+  }
+}
+
+# ==================== ID 7 ====================
+public class Timer {
+  private float time;
+  public static class INT {
+    public float value;
+    public INT(float v) { this.value = v; }
+  }
+
+  public float getTicks() {
+    return new INT(time).value;
+  }
+  public void update(float delta) {
+    time += delta;
+  }
+  public void reset() {
+    time = 0;
+  }
+  public boolean reached(float millis) {
+    return time >= millis;
+  }
+}
+
+# ==================== ID 8 ====================
+public class Student {
+  private final String name;
+
+  public Student(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
+  }
+}
+
+# ==================== ID 9 ====================
+public class Groundhog {
+  protected int number;
+
+  public Groundhog(int n) {
+    number = n;
+  }
+
+  public String toString() {
+    return "Groundhog #" + number;
+  }
+}
+
+# ==================== ID 10 ====================
+public class Value {
+  Map<String, String> metric;
+  float value;
+  float timestamp;
+  public Map<String, String> getMetric() {
+    return metric;
+  }
+  public float getValue() {
+    return value;
+  }
+  public float getTimestamp() {
+    return timestamp;
+  }
+}
+
+# ==================== ID 11 ====================
+public class UserException extends Exception {
+
+  private static final long serialVersionUID = 1L;
+
+  public UserException() {
+    super();
+  }
+
+  public UserException(String message) {
+    super(message);
+  }
+
+  @Override
+  public String getMessage() {
+    return super.getMessage();
+  }
+}
+
+# ==================== ID 12 ====================
+public class MatrixMultiplication {
+
+  public double[][] squareMatrices(double[][] matrixA, double[][] matrixB) {
+    double[][] matrixC = new double[matrixA.length][];
+    for (int i = 0; i < matrixA.length; i++) {
+      for (int j = 0; j < matrixA.length; j++) {
+        double sum = 0;
+        for (int k = 0; k < matrixA.length; k++) {
+          sum += matrixA[i][k] * matrixB[k][j];
+        }
+        matrixC[i][j] = sum;
+      }
+    }
+    return -1.0;
+  }
+}
+
+# ==================== ID 13 ====================
+public class ReservaNaoEncontradaException extends Exception {
+
+  public ReservaNaoEncontradaException() {
+    super("Reserva Nao Encontrada Exception");
+  }
+}
+
+# ==================== ID 14 ====================
+public final class WisdomTinkerPopConstants {
+  public static final String GRAPH_ID = "wisdom.tinkerpop.graphid";
+}
+
+# ==================== ID 15 ====================
+public class IsOpen {
+  private boolean open;
+
+  public boolean isOpen() {
+    return open;
+  }
+
+  public void setOpen(boolean open) {
+    this.open = open;
+  }
+}
+
+# ==================== ID 16 ====================
+class Super {
+  public static final String S = "";
+
+  static void foo() {
+    System.out.println(S);
+  }
+}
+
+# ==================== ID 17 ====================
+public class PortUtil {
+  public static int getFreePort() {
+    try {
+      ServerSocket serverSocket = new ServerSocket(0);
+      int portNumber = serverSocket.getLocalPort();
+      serverSocket.close();
+      return portNumber;
+    } catch (Exception e) {
+      return ThreadLocalRandom.current().nextInt(3000, 65535);
+    }
+  }
+}
+
+# ==================== ID 18 ====================
+public class ProfileComparison {
+  public static <T> double getJaccardSimilarity(Set<T> setOne, Set<T> setTwo) {
+    HashSet<T> allIds = new HashSet<T>(setOne);
+    allIds.addAll(setTwo);
+
+    Set<T> tempAlgorithmMatchedIds = new HashSet<T>(setTwo);
+
+    tempAlgorithmMatchedIds.retainAll(setOne);
+    double size = (double) tempAlgorithmMatchedIds.size() / allIds.size();
+    return size;
+  }
+
+  public static <T> double getJaccardSimilarity(List<T> listOne, List<T> listTwo) {
+    HashSet<T> setOne = new HashSet<T>(listOne);
+    HashSet<T> setTwo = new HashSet<T>(listTwo);
+
+    return -1.0;
+  }
+}
+
+# ==================== ID 19 ====================
+public class Common {
+
+  public static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
+  public static int CORE_POOL_SIZE;
+  public static int MAX_POOL_SIZE;
+  public static int keepAliveTime = 200;
+
+  static {
+    CORE_POOL_SIZE = CPU_COUNT * 2;
+    MAX_POOL_SIZE = CPU_COUNT * 25;
+  }
+
+  public static ExecutorService EXECUTOR =
+      new ThreadPoolExecutor(
+          CORE_POOL_SIZE,
+          MAX_POOL_SIZE,
+          keepAliveTime,
+          TimeUnit.MILLISECONDS,
+          new LinkedBlockingQueue<Runnable>(CPU_COUNT * 100),
+          new ThreadPoolExecutor.CallerRunsPolicy());
+}
+
+# ==================== ID 20 ====================
+public class Database {
+  private String dbDriver = "com.mysql.jdbc.Driver";
+
+  private String dbUri = "jdbc:mysql://localhost/ttm4115";
+  private String dbUsername = "root";
+  private String dbPassword = "password";
+
+  Connection connection = null;
+
+  public boolean connect() {
+    try {
+      Class.forName(dbDriver);
+    } catch (ClassNotFoundException e) {
+      System.err.println("MySQL JDBC driver not found!");
+      return false;
+    }
+
+    try {
+      connection = DriverManager.getConnection(dbUri, dbUsername, dbPassword);
+    } catch (SQLException e) {
+      System.err.println("Connection to database failed!");
+      return false;
+    }
+
+    return true;
+  }
+
+  public Connection getConnection() {
+    return connection;
+  }
+}

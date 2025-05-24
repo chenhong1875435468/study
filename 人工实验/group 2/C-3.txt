@@ -1,0 +1,314 @@
+# ==================== ID 1 ====================
+void watchcat_prepare_entry (watchcat_entry_t *entry, const char *text, int len) {
+  int positions = 0;
+  int n = searchy_extract_words (text, len, entry->by_pos, MAX_WATCHCAT_ENTRY_SIZE, 0, 0, 0, &positions);
+  entry->n = n;
+  memcpy (&entry->by_hash, &entry->by_pos, sizeof (searchy_pair_word_position_t) * n);
+
+  int i;
+  for (i = 0; i < n; i++) {
+    entry->by_hash[i].position = i;
+  }
+
+  qsort (&entry->by_hash, n, sizeof (searchy_pair_word_position_t), cmp_spwp_by_hash);
+}
+
+# ==================== ID 2 ====================
+int pthread_cond_destroy(pthread_cond_t *cv)
+{
+    int ret = 0;
+    if (NULL == cv || *cv == (pthread_cond_t) 0) {
+        return EINVAL;
+    }
+    esp_pthread_cond_t *cond = (esp_pthread_cond_t *) *cv;
+    _lock_acquire_recursive(&cond->lock);
+    if (!TAILQ_EMPTY(&cond->waiter_list)) {
+        ret = EBUSY;
+    }
+    _lock_release_recursive(&cond->lock);
+    if (0 == ret) {
+        *cv = (pthread_cond_t) 0;
+        _lock_close_recursive(&cond->lock);
+        free(cond);
+    }
+    return ret;
+}
+
+# ==================== ID 3 ====================
+static void process_synthesis_subpackets(QDM2Context *q, QDM2SubPNode *list)
+{
+    QDM2SubPNode *nodes[4];
+
+    nodes[0] = qdm2_search_subpacket_type_in_list(list, 9);
+    if (nodes[0])
+        process_subpacket_9(q, nodes[0]);
+
+    nodes[1] = qdm2_search_subpacket_type_in_list(list, 10);
+    if (nodes[1])
+        process_subpacket_10(q, nodes[1]);
+    else
+        process_subpacket_10(q, NULL);
+
+    nodes[2] = qdm2_search_subpacket_type_in_list(list, 11);
+    if (nodes[0] && nodes[1] && nodes[2])
+        process_subpacket_11(q, nodes[2]);
+    else
+        process_subpacket_11(q, NULL);
+
+    nodes[3] = qdm2_search_subpacket_type_in_list(list, 12);
+    if (nodes[0] && nodes[1] && nodes[3])
+        process_subpacket_12(q, nodes[3]);
+    else
+        process_subpacket_12(q, NULL);
+}
+
+# ==================== ID 4 ====================
+jv load_module_meta(jq_state *jq, jv mod_relpath) {
+  // We can't know the caller's origin; we could though, if it was passed in
+  jv lib_path = find_lib(jq, validate_relpath(mod_relpath), jq_get_lib_dirs(jq), ".jq", jq_get_jq_origin(jq), jv_null());
+  if (!jv_is_valid(lib_path))
+    return lib_path;
+  jv meta = jv_null();
+  jv data = jv_load_file(jv_string_value(lib_path), 1);
+  if (jv_is_valid(data)) {
+    block program;
+    struct locfile* src = locfile_init(jq, jv_string_value(lib_path), jv_string_value(data), jv_string_length_bytes(jv_copy(data)));
+    int nerrors = jq_parse_library(src, &program);
+    if (nerrors == 0) {
+      meta = block_module_meta(program);
+      if (jv_get_kind(meta) == JV_KIND_NULL)
+        meta = jv_object();
+      meta = jv_object_set(meta, jv_string("deps"), block_take_imports(&program));
+    }
+    locfile_free(src);
+    block_free(program);
+  }
+  jv_free(lib_path);
+  jv_free(data);
+  return meta;
+}
+
+# ==================== ID 5 ====================
+int luaZ_fill (ZIO *z) {
+  size_t size;
+  lua_State *L = z->L;
+  const char *buff;
+  lua_unlock(L);
+  buff = z->reader(L, z->data, &size);
+  lua_lock(L);
+  if (NULL == buff || 0 == size)
+    return EOZ;
+  z->n = size - 1;   
+  z->p = buff;
+  return cast_uchar(*(z->p++));
+}
+
+# ==================== ID 6 ====================
+static int usr_dec_cmp(const void *a, const void *b)
+{
+	const struct coal_sort_s *csA = (const struct coal_sort_s *)a;
+	const struct coal_sort_s *csB = (const struct coal_sort_s *)b;
+
+	return (csB->usr_order - csA->usr_order);
+}
+
+# ==================== ID 7 ====================
+void test_merge_driver__initialize(void)
+{
+    git_config *cfg;
+
+    repo = cl_git_sandbox_init(TEST_REPO_PATH);
+    git_repository_index(&repo_index, repo);
+
+	git_oid_fromstr(&automergeable_id, AUTOMERGEABLE_IDSTR);
+
+    /* Ensure that the user's merge.conflictstyle doesn't interfere */
+    cl_git_pass(git_repository_config(&cfg, repo));
+
+    cl_git_pass(git_config_set_string(cfg, "merge.conflictstyle", "merge"));
+    cl_git_pass(git_config_set_bool(cfg, "core.autocrlf", false));
+
+	test_drivers_register();
+
+    git_config_free(cfg);
+}
+
+# ==================== ID 8 ====================
+int TH_CreateTetrahedron(int triangles[4])
+{
+	th_tetrahedron_t *tetrahedron;
+	int i;
+
+	if (thworld.numtetrahedrons == 0) thworld.numtetrahedrons = 1;
+	if (thworld.numtetrahedrons >= MAX_TH_TETRAHEDRONS)
+		Error("MAX_TH_TETRAHEDRONS");
+	tetrahedron = &thworld.tetrahedrons[thworld.numtetrahedrons++];
+	for (i = 0; i < 4; i++)
+	{
+		tetrahedron->triangles[i] = triangles[i];
+		if (thworld.triangles[abs(triangles[i])].front)
+		{
+			thworld.triangles[abs(triangles[i])].back = thworld.numtetrahedrons-1;
+		}
+		else
+		{
+			thworld.triangles[abs(triangles[i])].front = thworld.numtetrahedrons-1;
+		}
+	}
+	tetrahedron->volume = 0;
+	return thworld.numtetrahedrons-1;
+}
+
+# ==================== ID 9 ====================
+static size_t ZSTD_copyRawBlock(void* dst, size_t dstCapacity,
+                          const void* src, size_t srcSize)
+{
+    DEBUGLOG(5, "ZSTD_copyRawBlock");
+    if (NULL == dst) {
+        if (0 == srcSize) return 0;
+        return ERROR(dstBuffer_null);
+    }
+    if (srcSize > dstCapacity) return ERROR(dstSize_tooSmall);
+    memcpy(dst, src, srcSize);
+    return srcSize;
+}
+
+# ==================== ID 10 ====================
+void sqlite3_result_int(sqlite3_context *pCtx, int iVal){
+  assert( sqlite3_mutex_held(pCtx->pOut->db->mutex) );
+  sqlite3VdbeMemSetInt64(pCtx->pOut, (i64)iVal);
+}
+
+# ==================== ID 11 ====================
+static int ends_with(MetadataContext *s, const char *value1, const char *value2)
+{
+    const int len1 = strlen(value1);
+    const int len2 = strlen(value2);
+
+    return !strncmp(value1 + FFMAX(len1 - len2, 0), value2, len2);
+}
+
+# ==================== ID 12 ====================
+UINT32 multiprecision_dword_bits(DWORD a)
+{
+    uint32_t i;
+    for (i = 0; i < DWORD_BITS; i++, a >>= 1)
+        if (a == 0) {
+            break;
+        }
+
+    return i;
+}
+
+# ==================== ID 13 ====================
+void dl_close_file (int x) {
+  assert (0 <= x && x < MAX_FN);
+  assert (fd[x] != -1);
+
+  if (!fread_only[x]) {
+    assert (fsync (fd[x]) >= 0);
+  } else {
+    fread_only[x] = 0;
+  }
+  assert (close (fd[x]) >= 0);
+  fd[x] = -1;
+
+  fsize[x] = 0;
+  fpos[x] = 0;
+  dl_free (fnames[x], strlen (fnames[x]) + 1);
+  fnames[x] = NULL;
+}
+
+# ==================== ID 14 ====================
+int
+ipsec_interface_isvalid (ifnet_t interface)
+{
+    struct ipsec_pcb *pcb = NULL;
+    if (NULL == interface)
+        return 0;
+    pcb = ifnet_softc(interface);
+    if (NULL == pcb)
+        return 0;
+    if (0 == pcb->ipsec_unit)
+        return 0;
+    return 1;
+}
+
+# ==================== ID 15 ====================
+void SEGGER_SYSVIEW_RecordEndCallU32(unsigned int EventID, U32 Para0) {
+  U8* pPayload;
+  U8* pPayloadStart;
+  RECORD_START(SEGGER_SYSVIEW_INFO_SIZE + 2 * SEGGER_SYSVIEW_QUANTA_U32);
+
+  pPayload = pPayloadStart;
+  ENCODE_U32(pPayload, EventID);
+  ENCODE_U32(pPayload, Para0);
+  _SendPacket(pPayloadStart, pPayload, SYSVIEW_EVTID_END_CALL);
+  RECORD_END();
+}
+
+# ==================== ID 16 ====================
+static inline int bt_mesh_prov_salt(const u8_t conf_salt[16],
+                                    const u8_t prov_rand[16],
+                                    const u8_t dev_rand[16],
+                                    u8_t prov_salt[16])
+{
+    const u8_t prov_salt_key[16] = { 0 };
+    struct bt_mesh_sg sg[] = {
+        { conf_salt, 16 },
+        { prov_rand, 16 },
+        { dev_rand, 16 },
+    };
+
+    return bt_mesh_aes_cmac(prov_salt_key, sg, ARRAY_SIZE(sg), prov_salt);
+}
+
+# ==================== ID 17 ====================
+int do_change_album (int uid, int aid, char *changes) {
+  if (NULL == changes) {
+    return 0;
+  }
+  int l = strlen (changes);
+  if (!check_album_id (aid) || 0 == l || l >= MAX_EVENT_SIZE) {
+    return 0;
+  }
+  if (php_get_fields (ALBUM_TYPE, changes) < 0) {
+    return 0;
+  }
+  if (0 == field_changes_n) {
+    return 1;
+  }
+  return do_change_data (uid, aid, LEV_PHOTO_CHANGE_ALBUM);
+}
+
+# ==================== ID 18 ====================
+static int cmp_record_to_refname(const char *rec, const char *refname)
+{
+	const char *r1 = rec + the_hash_algo->hexsz + 1;
+	const char *r2 = refname;
+
+	while (1) {
+		if (*r1 == '\n')
+			return *r2 ? -1 : 0;
+		if (!*r2)
+			return 1;
+		if (*r1 != *r2)
+			return (unsigned char)*r1 < (unsigned char)*r2 ? -1 : +1;
+		r1++;
+		r2++;
+	}
+}
+
+# ==================== ID 19 ====================
+static int imax(int a, int b) {
+  if (a>b) return a;
+  else return b;
+}
+
+# ==================== ID 20 ====================
+void ff_log_net_error(void *ctx, int level, const char* prefix)
+{
+    char errbuf[100];
+    av_strerror(ff_neterrno(), errbuf, sizeof(errbuf));
+    av_log(ctx, level, "%s: %s\n", prefix, errbuf);
+}

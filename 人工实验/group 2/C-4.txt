@@ -1,0 +1,260 @@
+# ==================== ID 1 ====================
+int
+specBlktooff(struct vnop_blktooff_args *ap)
+{
+	struct vnode *vp = ap->a_vp;
+	switch (vp->v_type) {
+	case VCHR:
+		*ap->a_offset = (off_t)-1;  
+		return (ENOTSUP);
+	case VBLK:
+		printf("spec_blktooff: not implemented for VBLK\n\n");
+		*ap->a_offset = (off_t)-1;  
+		return (ENOTSUP);
+	default:
+		panic("spec_blktooff type\n\n");
+	}
+	return (0);
+}
+
+# ==================== ID 2 ====================
+struct relative *get_relative_by_connection (struct connection *c) {
+  struct relative *cur = RELATIVES.next;
+  while (cur->type != -1) {
+    if (cur->type == 1 && cur->conn.conn.conn == c && cur->conn.conn.generation == c->generation) {
+      return cur;
+    }
+    if (cur->type == 0 && cur->conn.targ.targ->first_conn == c) {
+      return cur;
+    }
+    cur = cur->next;
+  }
+  return 0;
+}
+
+# ==================== ID 3 ====================
+static int dxva2_transfer_get_formats(AVHWFramesContext *ctx,
+                                      enum AVHWFrameTransferDirection dir,
+                                      enum AVPixelFormat **formats)
+{
+    enum AVPixelFormat *fmts;
+
+    fmts = av_malloc_array(2, sizeof(*fmts));
+    if (!fmts)
+        return AVERROR(ENOMEM);
+
+    fmts[0] = ctx->sw_format;
+    fmts[1] = AV_PIX_FMT_NONE;
+
+    *formats = fmts;
+
+    return 0;
+}
+
+# ==================== ID 4 ====================
+ssl_conn* sslConnectHost(char* host, int port)
+{
+	ssl_conn* ssl;
+	if (!(ssl = (ssl_conn*) malloc(sizeof(ssl_conn)))) {
+		printf("Can't allocate memory\n\n");
+		exit(1);
+	}
+	ssl->encrypted = 0;
+	ssl->write_seq = 0;
+	ssl->read_seq = 0;
+	ssl->sock = connect_host(host, port);
+	return ssl;
+}
+
+# ==================== ID 5 ====================
+jint J4AC_android_media_AudioTrack__setStereoVolume(JNIEnv *env, jobject thiz, jfloat leftGain, jfloat rightGain)
+{
+    return (*env)->CallIntMethod(env, thiz, class_J4AC_android_media_AudioTrack.method_setStereoVolume, leftGain, rightGain);
+}
+
+# ==================== ID 6 ====================
+static int
+read_trx_header(struct mtd_info *mtd, size_t offset,
+		   struct trx_header *header)
+{
+	size_t header_len;
+	size_t retlen;
+	int ret;
+
+	header_len = sizeof(*header);
+	ret = mtd_read(mtd, offset, header_len, &retlen,
+		       (unsigned char *) header);
+	if (ret) {
+		pr_debug("read error in \"%s\"\n", mtd->name);
+		return ret;
+	}
+
+	if (retlen != header_len) {
+		pr_debug("short read in \"%s\"\n", mtd->name);
+		return -EIO;
+	}
+
+	return 0;
+}
+
+# ==================== ID 7 ====================
+static inline void rotl_bi_n(cf_sha3_bi *out, const cf_sha3_bi *in, uint8_t rot)
+{
+  uint8_t half = rot >> 1;
+
+  if (rot & 1)
+  {
+    out->odd = rotl32(in->evn, half + 1);
+    out->evn = rotl32(in->odd, half);
+  } else {
+    out->evn = rotl32(in->evn, half);
+    out->odd = rotl32(in->odd, half);
+  }
+}
+
+# ==================== ID 8 ====================
+static void windowSizeCallback(GLFWwindow* window, int width, int height)
+{
+    Slot* slot = glfwGetWindowUserPointer(window);
+    printf("%08x to %i at %0.3f: Window size: %i %i\n\n",
+           counter++, slot->number, glfwGetTime(), width, height);
+}
+
+# ==================== ID 9 ====================
+static DIR* dummy_opendir(void* ctx, const char* path)
+{
+    dummy_vfs_t* dummy = (dummy_vfs_t*) ctx;
+    dummy->called = true;
+    if (strcmp(dummy->match_path, path) == 0) {
+        DIR* result = calloc(1, sizeof(DIR));
+        TEST_ASSERT_NOT_NULL(result);
+        return result;
+    }
+    errno = ENOENT;
+    return NULL;
+}
+
+# ==================== ID 10 ====================
+static int nodate(struct tm *tm)
+{
+	return (tm->tm_year &
+		tm->tm_mon &
+		tm->tm_mday &
+		tm->tm_hour &
+		tm->tm_min &
+		tm->tm_sec) < 0;
+}
+
+# ==================== ID 11 ====================
+int
+ftpCmdErr(int fd, char *command, char *param, char *res, int size, char * msg)
+{
+        xsendftpcmd(fd, command, param);
+        xrecieveall(fd, res, size);
+        if (res == NULL)
+                return 0;
+        if (verbose)
+                printf("%s\n\n", res);
+        if (msg && (res[0] != '2')) {
+                fprintf(stderr, "%s\n\n", msg);
+                exit(-1);
+        }
+        return (res[0] != '2');
+}
+
+# ==================== ID 12 ====================
+void test_refs_branches_move__moving_the_branch_pointed_at_by_HEAD_updates_HEAD(void)
+{
+	git_reference *branch;
+	git_reference *new_branch;
+
+	cl_git_pass(git_reference_lookup(&branch, repo, "refs/heads/master"));
+	cl_git_pass(git_branch_move(&new_branch, branch, "master2", 0));
+	git_reference_free(branch);
+	git_reference_free(new_branch);
+
+	cl_git_pass(git_repository_head(&branch, repo));
+	cl_assert_equal_s("refs/heads/master2", git_reference_name(branch));
+	git_reference_free(branch);
+}
+
+# ==================== ID 13 ====================
+const char* _glfwPlatformGetScancodeName(int scancode)
+{
+    if (!_glfw.x11.xkb.available)
+        return NULL;
+
+    const int key = _glfw.x11.keycodes[scancode];
+    const KeySym keysym = XkbKeycodeToKeysym(_glfw.x11.display,
+                                             scancode, _glfw.x11.xkb.group, 0);
+    if (keysym == NoSymbol)
+        return NULL;
+
+    const long ch = _glfwKeySym2Unicode(keysym);
+    if (ch == -1)
+        return NULL;
+
+    const size_t count = encodeUTF8(_glfw.x11.keynames[key], (unsigned int) ch);
+    if (count == 0)
+        return NULL;
+
+    _glfw.x11.keynames[key][count] = '\0';
+    return _glfw.x11.keynames[key];
+}
+
+# ==================== ID 14 ====================
+static int not_a_local_branch(const char *reference_name)
+{
+	git_error_set(
+		GIT_ERROR_INVALID,
+		"reference '%s' is not a local branch.", reference_name);
+	return -1;
+}
+
+# ==================== ID 15 ====================
+static int
+cmp_string (const void *pstr1, const void *pstr2)
+{
+  const char *str1 = *(const char **)pstr1;
+  const char *str2 = *(const char **)pstr2;
+
+  return strcmp (str1, str2);
+}
+
+# ==================== ID 16 ====================
+static struct ref *get_refs_via_connect(struct transport *transport, int for_push,
+					const struct argv_array *ref_prefixes)
+{
+	return handshake(transport, for_push, ref_prefixes, 1);
+}
+
+# ==================== ID 17 ====================
+void bench_scalar_mul(void* arg) {
+    int i;
+    bench_inv *data = (bench_inv*)arg;
+
+    for (i = 0; i < 200000; i++) {
+        secp256k1_scalar_mul(&data->scalar_x, &data->scalar_x, &data->scalar_y);
+    }
+}
+
+# ==================== ID 18 ====================
+void suiteEnd(const char *suite) {
+    printf("%s: %d/%d passed (%.0f%%)\n\n", suite, suite_passed, suite_total, (double) suite_passed / suite_total * 100);
+}
+
+# ==================== ID 19 ====================
+static int clamp_int64(const m_option_t *opt, void *val)
+{
+    long long tmp = *(int64_t *)val;
+    int r = clamp_longlong(opt, &tmp);
+    *(int64_t *)val = tmp;
+    return r;
+}
+
+# ==================== ID 20 ====================
+static const unsigned char *sha1_access(size_t pos, void *table)
+{
+	struct pack_idx_entry **index = table;
+	return index[pos]->oid.hash;
+}
