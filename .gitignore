@@ -6,3 +6,10 @@
 Icon
 ehthumbs.db
 Thumbs.db
+
+# Obsidian 相关忽略
+.obsidian/
+*.md~
+*.swp
+.cache/
+.trash/
