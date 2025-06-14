@@ -275,20 +275,8 @@
                 {
                   "children": [
                     {
-                      "active": true,
-                      "activeTime": "1749921882352",
-                      "children": {
-                        "action": "cb-get-scroll",
-                        "blockId": "20250615003620-wwc99bi",
-                        "instance": "Editor",
-                        "mode": "wysiwyg",
-                        "notebookId": "20250615003615-s8xekek",
-                        "rootId": "20250615003620-wwc99bi"
-                      },
-                      "docIcon": "",
-                      "instance": "Tab",
-                      "pin": false,
-                      "title": "两数之和"
+                      "children": {},
+                      "instance": "Tab"
                     }
                   ],
                   "height": "",
