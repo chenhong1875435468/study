@@ -95,7 +95,14 @@
       "startId": "20250615004617-l3xf9ox"
     }
   },
-  "local-filespaths": [],
+  "local-filespaths": [
+    {
+      "notebookId": "20250615003615-s8xekek",
+      "openPaths": [
+        "/20250615003620-wwc99bi/20250615004617-3ri9xcd.sy"
+      ]
+    }
+  ],
   "local-searchkeys": {
     "col": "",
     "colTab": "",
