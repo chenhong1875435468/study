@@ -1,0 +1,17 @@
+{
+    "light": {
+        "followSysAccentColor": false,
+        "chroma": "1",
+        "userCustomColor": "#3478f6",
+        "presetPalette": "prst-palette-aerisland"
+    },
+    "dark": {
+        "followSysAccentColor": false,
+        "chroma": "1",
+        "userCustomColor": "#3478f6",
+        "presetPalette": ""
+    },
+    "features": {
+        "tfp": ""
+    }
+}

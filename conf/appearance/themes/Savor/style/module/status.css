@@ -1,0 +1,65 @@
+#savorToolbar button{
+    display: block!important;
+}
+.toolbar:not(.toolbar--border) ~ #status,.body--window #status{
+	transition: transform .2s cubic-bezier(0, 0, .2, 1) 0ms;
+	position: fixed;
+    height: 24px;
+    line-height: 24px;
+    right: 28px;
+    bottom: 9px; 
+	border-radius: 6px;
+    padding-right: 0px;
+    border: none;
+    background-color: var(--Sv-status-msg-background);
+	transform: translate(0px, 0px);
+    .toolbar__item:not(.toolbar__item--close) {
+        padding:2px;
+        height: 24px;
+        svg{
+            padding:3px 4px;
+            width: 12px;
+        }
+        & span{
+            margin:3px;
+            font-size:12px;
+        }
+        &:hover {
+            background-color: var(--Sv-status-item-hover)!important;
+        }
+    }
+    >.fn__flex-1{
+        display: none;
+    }
+    #statusHelp{
+        color: var(--Sv-status-barDock-color);
+        order: 97; 
+    }
+    #barDock{
+        order: 98; 
+        margin-left: 4px;
+        margin-right: -28px;
+        background-color: var(--Sv-status-msg-background);
+    }
+    .status__msg:not(:empty){
+            padding-left: 26px!important;
+            padding-right: 10px;
+            &::after{
+                content: "📢";
+                font-size:12px;
+                padding:0 6px;
+                position: absolute;
+                left: 0px;
+            }
+    }
+}
+
+
+.status.fn__none{/*隐藏底栏保留停靠栏按钮*/
+    display: flex!important;
+    &>div:not(#barDock){
+        display: none;
+    }
+}
+
+
